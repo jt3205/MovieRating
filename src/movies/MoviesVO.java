@@ -1,15 +1,12 @@
 package movies;
 
 public class MoviesVO {
-	int rank;
-	String title;
-	String date;
+	private int rank;
+	private String title;
+	private String date;
 	
 	public int getRank() {
 		return rank;
-	}
-	public void setRank(int rank) {
-		this.rank = rank;
 	}
 	public String getTitle() {
 		return title;
