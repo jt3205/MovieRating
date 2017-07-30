@@ -1,8 +1,10 @@
-import util.crawler.Crawler;
-import util.date.DateUtil;
+import rank.RankService;
+import util.crawler.MovieCrawler;
+import util.crawler.RankCrawler;
 
 public class Test {
 	public static void main(String[] args) {
-		System.out.println(DateUtil.getToDate());
+		MovieCrawler crawler = new MovieCrawler("http://movie.naver.com/movie/search/result.nhn?query=±ØÀåÆÇ Â¯±¸´Â ¸ø¸»·Á : ½À°Ý!! ¿Ü°èÀÎ µ¢µ¢ÀÌ&section=movie&ie=utf8");
+		System.out.println(crawler.crawlRating());
 	}
 }

@@ -2,37 +2,37 @@ package util.crawler;
 
 import org.jsoup.select.Elements;
 
-import movies.MoviesService;
-import movies.MoviesVO;
+import movie.MovieVO;
+import rank.RankService;
+import rank.RankVO;
 import util.date.DateUtil;
 
 public class MovieCrawler {
-	private String url = "http://movie.naver.com/movie/sdb/rank/rmovie.nhn";
-	private String tags = ".tit3 > a";
+	private String url;
+	private String tag;
+	
+	private final String RATING_TAG = ".point > .num";
 	
 	Elements elements;
-	MoviesVO vo;
-	MoviesVO voArr[];
+	MovieVO vo;
+	MovieVO voArr[];
 	Crawler crawler;
-	MoviesService service;
 	
-	public MoviesVO[] CrawlMovies() {
-		crawler = new Crawler(url);
-		elements = crawler.getElements(tags);
-		
-		return elementsToVo(elements);
+	public MovieCrawler(String url) {
+		url = url.replaceAll(" ", "%20");
+		this.url = url;
 	}
 	
-	public MoviesVO[] elementsToVo(Elements elements){
-		voArr = new MoviesVO[elements.size()];
-		String today = DateUtil.getToDate();
+	public void setUrl(String url) {
+		url = url.replaceAll(" ", "%20");
+		this.url = url;
+	}
+	
+	public double crawlRating() {
+		crawler = new Crawler(url);
 		
-		for (int i = 0; i < voArr.length; i++) {
-			voArr[i] = new MoviesVO();
-			
-			voArr[i].setTitle(elements.get(i).text());
-			voArr[i].setDate(today);
-		}
-		return voArr;
+		tag = RATING_TAG;
+		elements = crawler.getElements(tag);
+		return Double.parseDouble(elements.get(0).text());
 	}
 }
