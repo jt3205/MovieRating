@@ -10,15 +10,19 @@ public class RankDAO {
 	ResultSet rs;
 	
 	private final String INSERT_MOVIE = "insert into rank(rank, title, date) values (?,?,?)";
-	public void insertMovie(int rank, String title, String date) {
+	public void insertMovie(RankVO vo[]) {
 		con = JdbcUtil.getConnection();
 		try {
 			pstmt = con.prepareStatement(INSERT_MOVIE);
-			pstmt.setInt(1, rank);
-			pstmt.setString(2, title);
-			pstmt.setString(3, date);
 			
-			pstmt.execute();
+			for (int i = 0; i < vo.length; i++) {
+				pstmt.setInt(1, i+1);
+				pstmt.setString(2, vo[i].getTitle());
+				pstmt.setString(3, vo[i].getDate());
+				
+				pstmt.execute();
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

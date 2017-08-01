@@ -2,23 +2,27 @@ package util.crawler;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;;
+import org.jsoup.select.Elements;
 
 public class Crawler {
-	private String url = "http://www.y-y.hs.kr/lunch.view?";
-
-	public String getMenuData(String date) {
+	private String url;
+	
+	public Crawler(String url) {
+		this.url = url;
+	}
+	
+	public String getUrl() {
+		return url;
+	}
+	
+	public Elements getElements(String form) {
 		try {
-			// http://www.y-y.hs.kr/lunch.view?date=20170623
-			//Document doc = Jsoup.connect(url).data("date", date).get();
-			Document doc = Jsoup.connect(url + "date=" + date).get();
-			
-			Element menu = doc.select("#morning .menuName > span").first();
-			return menu.text();
+			Document doc = Jsoup.connect(url).get();
+			Elements menu = doc.select(form);
+			return menu;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-
 }

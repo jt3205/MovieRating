@@ -34,13 +34,7 @@ public class JdbcUtil {
 				e.printStackTrace();
 			}
 		}
-		if(pstmt != null){
-			try {
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		close(pstmt);
 	}
 	
 	public static void close(Connection con, PreparedStatement pstmt, ResultSet rs) {
@@ -49,6 +43,16 @@ public class JdbcUtil {
 		if(rs != null){
 			try {
 				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void close(PreparedStatement pstmt) {
+		if(pstmt != null){
+			try {
+				pstmt.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
