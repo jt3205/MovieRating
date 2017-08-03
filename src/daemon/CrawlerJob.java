@@ -2,17 +2,17 @@ package daemon;
 
 import java.util.TimerTask;
 
-import util.crawler.NewsCrawler;
+import util.crawler.MovieCrawler;
 
 public class CrawlerJob extends TimerTask{
-	private NewsCrawler crawler;
+	private MovieCrawler crawler;
 	public CrawlerJob() {
-		crawler = new NewsCrawler();
+		crawler = new MovieCrawler("title");	//휴가 갔다와서 수정할것..
 	}
 	
 	@Override
 	public void run() {
-		crawler.updateNewsTable();
+		//업데이트
 	}
-	
+
 }
