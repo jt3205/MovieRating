@@ -1,6 +1,8 @@
 package util.crawler;
 
 import org.jsoup.select.Elements;
+
+import info.InfoVO;
 import movie.MovieVO;
 
 public class MovieCrawler {
@@ -12,6 +14,9 @@ public class MovieCrawler {
 	private final String POSTER_TAG_CINE = ".mov_poster > img";
 	private final String VIDIOLINK_TAG_NAVER = ".video_thumb > li > .video_obj";
 	private final String IFRAME_VIDIO_TAG_NAVER = ".video_ar > ._videoPlayer";
+	private final String SUBINFOS_SPAN_TAG_CINE = ".mov_info > .sub_info > span";
+	private final String SUBINFOS_TAG_CINE = ".mov_info > .sub_info";
+	private final String ENGTITLE_TAG_CINE = ".mov_info > .tit_eng > span";
 
 	private String naverSearchLink = "http://movie.naver.com/movie/search/result.nhn?query=title&ie=utf8";
 	private String cgvSearchLink = "http://www.cgv.co.kr/search/?query=title";
@@ -22,8 +27,9 @@ public class MovieCrawler {
 	};
 
 	Elements elements;
-	MovieVO vo;
+	MovieVO movieVO;
 	MovieVO voArr[];
+	InfoVO infoVO;
 	Crawler crawler;
 	String title;
 
@@ -57,12 +63,51 @@ public class MovieCrawler {
 	public String crawlIframeVidioLink() {
 		crawler = new Crawler(getMovieLink(site.naver));
 		elements = crawler.getElements(VIDIOLINK_TAG_NAVER);
-		
+
 		crawler = new Crawler(elements.get(0).attr("abs:href"));
 		elements = crawler.getElements(IFRAME_VIDIO_TAG_NAVER);
 		return elements.get(0).attr("abs:src");
 	}
-	
+
+	public InfoVO crawlSubInfos() {
+		int i = 0; // 관람가 등급이 없을경우 -1
+		crawler = new Crawler(getMovieLink(site.cine));
+		infoVO = new InfoVO();
+
+		elements = crawler.getElements(ENGTITLE_TAG_CINE);
+		infoVO.setTitle(title);
+		String engTitle = "";
+		for (int j = 0; j < elements.size(); j++) {
+			if (j == elements.size() - 1) {
+				engTitle += elements.get(j).text();
+			} else {
+				engTitle += elements.get(j).text() + "  ";
+			}
+		}
+		infoVO.setEnglishTitle(engTitle);
+
+		elements = crawler.getElements(SUBINFOS_SPAN_TAG_CINE);
+		infoVO.setYear(Integer.parseInt(elements.get(i + 0).text()));
+		infoVO.setCountry(elements.get(i + 1).text());
+		if (elements.get(2).text().substring(elements.get(2).text().length() - 4, elements.get(2).text().length())
+				.equals("관람가")) {
+			infoVO.setGrade(elements.get(i + 2).text());
+		} else {
+			infoVO.setGrade(null);
+			i = -1;
+		}
+		infoVO.setGenre(elements.get(i + 3).text());
+		infoVO.setShowtimes(cutBasedColon(elements.get(i + 4).text()));
+		infoVO.setReleaseDate(cutBasedColon(elements.get(i + 5).text()));
+		infoVO.setSpectator(cutBasedColon(elements.get(i + 6).text()));
+
+		elements = crawler.getElements(SUBINFOS_TAG_CINE);
+		infoVO.setDirector(cutBasedColon(elements.get(3).text()));
+		infoVO.setPerformer(cutBasedColon(elements.get(4).text().substring(0, elements.get(1).text().length() - 1)));
+
+		return infoVO;
+	}
+
 	private String getMovieTag(site site) {
 		String tag = "";
 
@@ -103,5 +148,9 @@ public class MovieCrawler {
 		String tag = getMovieTag(site);
 		crawler = new Crawler(getSearchLink(site));
 		return crawler.getElements(tag).get(0).attr("abs:href");
+	}
+
+	public String cutBasedColon(String str) {
+		return str.substring(str.indexOf(":") + 2);
 	}
 }

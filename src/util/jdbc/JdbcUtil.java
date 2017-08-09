@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class JdbcUtil {
-	private static String user = "";
-	private static String password = "";
-	private static String url = "jdbc:mysql://?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Seoul";
+	private static String user = "Y20112";
+	private static String password = "1234";
+	private static String url = "jdbc:mysql://gmsgondr.net:3306/Y20112?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Seoul";
 	
 	private static Connection con;
 	
