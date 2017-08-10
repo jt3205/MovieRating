@@ -1,7 +1,6 @@
 package util.crawler;
 
 import org.jsoup.select.Elements;
-
 import info.InfoVO;
 import movie.MovieVO;
 
@@ -17,7 +16,8 @@ public class MovieCrawler {
 	private final String SUBINFOS_SPAN_TAG_CINE = ".mov_info > .sub_info > span";
 	private final String SUBINFOS_TAG_CINE = ".mov_info > .sub_info";
 	private final String ENGTITLE_TAG_CINE = ".mov_info > .tit_eng > span";
-
+	private final String STORY_HTML_TAG_CINE = ".story_area > div";
+	
 	private String naverSearchLink = "http://movie.naver.com/movie/search/result.nhn?query=title&ie=utf8";
 	private String cgvSearchLink = "http://www.cgv.co.kr/search/?query=title";
 	private String cineSearchLink = "http://www.cine21.com/search/?q=title";
@@ -89,8 +89,7 @@ public class MovieCrawler {
 		elements = crawler.getElements(SUBINFOS_SPAN_TAG_CINE);
 		infoVO.setYear(Integer.parseInt(elements.get(i + 0).text()));
 		infoVO.setCountry(elements.get(i + 1).text());
-		if (elements.get(2).text().substring(elements.get(2).text().length() - 4, elements.get(2).text().length())
-				.equals("관람가")) {
+		if (elements.get(2).text().substring(elements.get(2).text().length() - 3, elements.get(2).text().length()).equals("관람가")) {
 			infoVO.setGrade(elements.get(i + 2).text());
 		} else {
 			infoVO.setGrade(null);
@@ -103,8 +102,11 @@ public class MovieCrawler {
 
 		elements = crawler.getElements(SUBINFOS_TAG_CINE);
 		infoVO.setDirector(cutBasedColon(elements.get(3).text()));
-		infoVO.setPerformer(cutBasedColon(elements.get(4).text().substring(0, elements.get(1).text().length() - 1)));
+		infoVO.setPerformer(cutBasedColon(elements.get(4).text().substring(0, elements.get(4).text().length() - 5)));
 
+		elements = crawler.getElements(STORY_HTML_TAG_CINE);
+		infoVO.setStoryHtml(elements.get(0).html());
+		
 		return infoVO;
 	}
 
@@ -125,7 +127,7 @@ public class MovieCrawler {
 		return tag;
 	}
 
-	public String getSearchLink(site site) {
+	private String getSearchLink(site site) {
 		String link = "";
 		switch (site) {
 		case naver:
@@ -144,13 +146,13 @@ public class MovieCrawler {
 		return link.replaceAll("title", title.replaceAll(" ", "%20"));
 	}
 
-	public String getMovieLink(site site) {
+	private String getMovieLink(site site) {
 		String tag = getMovieTag(site);
 		crawler = new Crawler(getSearchLink(site));
 		return crawler.getElements(tag).get(0).attr("abs:href");
 	}
 
-	public String cutBasedColon(String str) {
+	private String cutBasedColon(String str) {
 		return str.substring(str.indexOf(":") + 2);
 	}
 }

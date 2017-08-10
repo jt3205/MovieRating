@@ -3,11 +3,13 @@ package daemon;
 import java.util.TimerTask;
 
 import util.crawler.MovieCrawler;
+import util.crawler.RankCrawler;
 
 public class CrawlerJob extends TimerTask{
-	private MovieCrawler crawler;
+	private MovieCrawler movieCrawler;
+	private RankCrawler rankCrawler;
 	public CrawlerJob() {
-		crawler = new MovieCrawler("title");	//휴가 갔다와서 수정할것..
+		movieCrawler = new MovieCrawler("title");	//휴가 갔다와서 수정할것..
 	}
 	
 	@Override

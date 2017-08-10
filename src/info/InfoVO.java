@@ -12,6 +12,7 @@ public class InfoVO {
 	private String spectator;
 	private String director;
 	private String performer;
+	private String storyHtml;
 	
 	public String getTitle() {
 		return title;
@@ -88,5 +89,12 @@ public class InfoVO {
 	}
 	public void setPerformer(String performer) {
 		this.performer = performer;
+	}
+	
+	public String getStoryHtml() {
+		return storyHtml;
+	}
+	public void setStoryHtml(String story) {
+		this.storyHtml = story;
 	}
 }

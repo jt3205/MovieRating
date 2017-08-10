@@ -1,5 +1,6 @@
 package daemon;
 
+import java.util.Date;
 import java.util.Timer;
 
 import javax.servlet.http.HttpServlet;
@@ -13,7 +14,7 @@ public class CrawlerDaemon extends HttpServlet{
 		job = new CrawlerJob();
 		jobScheduler = new Timer();
 
-		jobScheduler.scheduleAtFixedRate(job, 1000 * 10, 1000 * 60 * 20);
+		jobScheduler.scheduleAtFixedRate(job, 0, 1000 * 60 * 60 * 24);
 	}
 	
 	public void finalize() {
