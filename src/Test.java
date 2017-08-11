@@ -3,7 +3,7 @@ import util.crawler.MovieCrawler;
 
 public class Test {
 	public static void main(String[] args) {
-		MovieCrawler crawler = new MovieCrawler("군함도");
+	/*	MovieCrawler crawler = new MovieCrawler("군함도");
 		String str = "";
 		InfoVO vo = crawler.crawlSubInfos();
 		str += vo.getTitle()+"\n";
@@ -18,6 +18,6 @@ public class Test {
 		str += vo.getDirector()+"\n";
 		str += vo.getPerformer()+"\n";
 		str += vo.getStoryHtml();
-		System.out.println(str);
+		System.out.println(str);*/
 	}
 }

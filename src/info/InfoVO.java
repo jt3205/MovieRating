@@ -9,7 +9,6 @@ public class InfoVO {
 	private String genre;
 	private String showtimes;
 	private String releaseDate;
-	private String spectator;
 	private String director;
 	private String performer;
 	private String storyHtml;
@@ -68,13 +67,6 @@ public class InfoVO {
 	}
 	public void setReleaseDate(String releaseDate) {
 		this.releaseDate = releaseDate;
-	}
-	
-	public String getSpectator() {
-		return spectator;
-	}
-	public void setSpectator(String spectator) {
-		this.spectator = spectator;
 	}
 	
 	public String getDirector() {

@@ -13,17 +13,17 @@ public class DispatcherServlet extends HttpServlet {
 
 	private static final String viewPath = "/WEB-INF/views/"; // 뷰경로를 저장해두고.
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		process(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("EUC-KR");
 		process(request, response);
 	}
-
+	
 	private void dispatcher(HttpServletRequest request, HttpServletResponse response, String view) {
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath + view);
 		try {

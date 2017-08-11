@@ -9,8 +9,8 @@ public class MovieDAO {
 	PreparedStatement pstmt;
 	ResultSet rs;
 
-	private final String INSERT_MOVIE = "insert into movie(title, rating, showing) values (?,?,?)";
-	private final String UPDATE_MOVIE = "update movie set rating = ?, showing = ?, where title = ?";
+	private final String INSERT_MOVIE = "insert into movie(title, rating, showing, spectator) values (?,?,?,?)";
+	private final String UPDATE_MOVIE = "update movie set rating = ?, showing = ?, spectator = ? where title = ?";
 
 	public void insertMovie(MovieVO vo[]) {
 		con = JdbcUtil.getConnection();
@@ -25,6 +25,7 @@ public class MovieDAO {
 				pstmt.setString(1, vo[i].getTitle());
 				pstmt.setFloat(2, (float) vo[i].getRating());
 				pstmt.setBoolean(3, vo[i].isShowing());
+				pstmt.setString(4, vo[i].getSpectator());
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -45,7 +46,8 @@ public class MovieDAO {
 			pstmt = con.prepareStatement(UPDATE_MOVIE);
 			pstmt.setFloat(1, (float) vo.getRating());
 			pstmt.setBoolean(2, vo.isShowing());
-			pstmt.setString(3, vo.getTitle());
+			pstmt.setString(3, vo.getSpectator());
+			pstmt.setString(4, vo.getTitle());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

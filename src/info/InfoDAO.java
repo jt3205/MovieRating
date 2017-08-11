@@ -12,8 +12,8 @@ public class InfoDAO {
 	PreparedStatement pstmt;
 	ResultSet rs;
 	
-	private final String INSERT_INFO = "INSERT INTO `info`(`title`, `englishTitle`, `year`, `country`, `grade`, `genre`, `showtimes`, `releaseDate`, `spectator`, "
-															+ "`director`, `performer`, `story`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+	private final String INSERT_INFO = "INSERT INTO `info`(`title`, `englishTitle`, `year`, `country`, `grade`, `genre`, `showtimes`, `releaseDate`, "
+															+ "`director`, `performer`, `story`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	public void insertInfo(InfoVO vo[]) {
 		con = JdbcUtil.getConnection();
 		try {
@@ -27,10 +27,9 @@ public class InfoDAO {
 				pstmt.setString(5, vo[i].getGenre());
 				pstmt.setString(6, vo[i].getShowtimes());
 				pstmt.setString(7, vo[i].getReleaseDate());
-				pstmt.setString(8, vo[i].getSpectator());
-				pstmt.setString(9, vo[i].getDirector());
-				pstmt.setString(10, vo[i].getPerformer());
-				pstmt.setString(11, vo[i].getStoryHtml());
+				pstmt.setString(8, vo[i].getDirector());
+				pstmt.setString(9, vo[i].getPerformer());
+				pstmt.setString(10, vo[i].getStoryHtml());
 				
 				pstmt.execute();
 			}
