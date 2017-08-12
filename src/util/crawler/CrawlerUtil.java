@@ -13,6 +13,11 @@ public class CrawlerUtil {
 	private String cgvSearchLink = "http://www.cgv.co.kr/search/?query=title";
 	private String cineSearchLink = "http://www.cine21.com/search/?q=title";
 	
+	public CrawlerUtil(String title) {
+		System.out.println(title);
+		this.title = title;
+	}
+	
 	String getMovieTag(site site) {
 		String tag = "";
 

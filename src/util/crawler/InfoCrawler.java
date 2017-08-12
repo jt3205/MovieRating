@@ -14,10 +14,11 @@ public class InfoCrawler {
 	InfoVO infoVO;
 	Crawler crawler;
 	String title;
-	CrawlerUtil util = new CrawlerUtil();
+	CrawlerUtil util;
 	
 	public InfoCrawler(String title) {
 		this.title = title;
+		util = new CrawlerUtil(title);
 	}
 	
 	public InfoVO getSubInfoVO() { // 원래 다 분리해야되는데 마감일에 밀려서 코드 더러움 나중에 꼭 리팩토링할것

@@ -16,10 +16,11 @@ public class MovieCrawler {
 	MovieVO movieVO;
 	Crawler crawler;
 	String title;
-	CrawlerUtil util = new CrawlerUtil();
+	CrawlerUtil util;
 
 	public MovieCrawler(String title) {
 		this.title = title;
+		util = new CrawlerUtil(title);
 	}
 	
 	public MovieVO getMovieVO(){
@@ -36,13 +37,14 @@ public class MovieCrawler {
 	private double crawlRating() {
 		crawler = new Crawler(util.getSearchLink(site.naver));
 		elements = crawler.getElements(RATING_TAG_NAVER);
+		System.out.println(Double.parseDouble(elements.get(0).text()));
 		return Double.parseDouble(elements.get(0).text());
 	}
 
 	private boolean crawlShowingNow() {
 		crawler = new Crawler(util.getMovieLink(site.naver));
 		elements = crawler.getElements(SHOWING_TAG_NAVER);
-		if (elements == null) {
+		if (elements == null || elements.size() == 0) {
 			return false;
 		} else if (elements.get(0).text().equals("»ó¿µÁß")) {
 			return true;

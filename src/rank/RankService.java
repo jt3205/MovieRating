@@ -6,4 +6,8 @@ public class RankService {
 	public void insertMovies(RankVO vo[]) {
 		dao.insertMovie(vo);
 	}
+	
+	public String[] getAllMovies() {
+		return dao.getAllMovies();
+	}
 }

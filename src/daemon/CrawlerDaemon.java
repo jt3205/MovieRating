@@ -1,6 +1,5 @@
 package daemon;
 
-import java.util.Date;
 import java.util.Timer;
 
 import javax.servlet.http.HttpServlet;
