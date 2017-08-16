@@ -4,7 +4,7 @@ import java.util.Timer;
 
 import javax.servlet.http.HttpServlet;
 
-public class CrawlerDaemon extends HttpServlet{
+public class CrawlerDaemon extends HttpServlet {
 	private CrawlerJob job;
 	private Timer jobScheduler;
 	

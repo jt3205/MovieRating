@@ -1,9 +1,9 @@
-import daemon.CrawlerJob;
+import info.InfoDAO;
 import info.InfoVO;
-import util.crawler.MovieCrawler;
 
 public class Test {
 	public static void main(String[] args) {
-		new CrawlerJob().update();
+		InfoVO vo = new InfoDAO().getInfo("택시운전사");
+		System.out.println(vo.getEnglishTitle());
 	}
 }

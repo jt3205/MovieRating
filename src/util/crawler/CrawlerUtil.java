@@ -55,9 +55,14 @@ public class CrawlerUtil {
 	}
 
 	String getMovieLink(site site) {
-		String tag = getMovieTag(site);
-		crawler = new Crawler(getSearchLink(site));
-		return crawler.getElements(tag).get(0).attr("abs:href");
+		try {
+			String tag = getMovieTag(site);
+			crawler = new Crawler(getSearchLink(site));
+			return crawler.getElements(tag).get(0).attr("abs:href");
+		} catch (Exception e) {
+			System.out.println("영화 링크를 찾을 수 없습니다");
+		}
+		return "";
 	}
 
 	String cutBasedColon(String str) {

@@ -34,10 +34,13 @@ public class MovieCrawler {
 		return movieVO;
 	}
 	
+	public String getGraphLink(){
+		return util.getMovieLink(site.cgv);
+	}
+	
 	private double crawlRating() {
 		crawler = new Crawler(util.getSearchLink(site.naver));
 		elements = crawler.getElements(RATING_TAG_NAVER);
-		System.out.println(Double.parseDouble(elements.get(0).text()));
 		return Double.parseDouble(elements.get(0).text());
 	}
 
@@ -53,30 +56,43 @@ public class MovieCrawler {
 	}
 
 	private String crawlPosterLink() {
+		String result = null;
 		crawler = new Crawler(util.getMovieLink(site.cine));
 		elements = crawler.getElements(POSTER_TAG_CINE);
-		return elements.get(0).attr("src");
+		if(elements != null){
+			result = elements.get(0).attr("src");
+		}
+		return result;
 	}
 
 	private String crawlIframeVidioLink() {
+		String result = null;
 		crawler = new Crawler(util.getMovieLink(site.naver));
 		elements = crawler.getElements(VIDIOLINK_TAG_NAVER);
-
-		crawler = new Crawler(elements.get(0).attr("abs:href"));
-		elements = crawler.getElements(IFRAME_VIDIO_TAG_NAVER);
-		return elements.get(0).attr("abs:src");
+		try {
+			crawler = new Crawler(elements.get(0).attr("abs:href"));
+			elements = crawler.getElements(IFRAME_VIDIO_TAG_NAVER);
+			result = elements.get(0).attr("abs:src");
+		} catch (Exception e) {
+			System.out.println("Can't find Video");
+		}
+		return result;
 	}
 
 	private String crawlSpectator() {
 		int i = 0;
 		String result = null;
-		crawler = new Crawler(util.getMovieLink(site.cine));
-		elements = crawler.getElements(SUBINFOS_SPAN_TAG_CINE);
-		if (!elements.get(2).text().substring(elements.get(2).text().length() - 3, elements.get(2).text().length()).equals("관람가")) {
-			i = -1;
-		}
-		if(elements != null && elements.size() > 6 + i){
-			result = util.cutBasedColon(elements.get(6 + i).text());
+		if(util.getMovieLink(site.cine) != ""){
+			crawler = new Crawler(util.getMovieLink(site.cine));
+			elements = crawler.getElements(SUBINFOS_SPAN_TAG_CINE);
+			if(elements.get(2).text().length() >= 3){
+				if (!elements.get(2).text().substring(elements.get(2).text().length() - 3, elements.get(2).text().length()).equals("관람가")) {
+					i = -1;
+				}
+				if(elements != null && elements.size() > 6 + i){
+					result = util.cutBasedColon(elements.get(6 + i).text());
+				}
+			}
 		}
 		return result;
 	}

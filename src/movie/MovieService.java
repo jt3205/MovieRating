@@ -6,4 +6,8 @@ public class MovieService {
 	public void insertMovie(MovieVO vo[]) {
 		dao.insertMovie(vo);
 	}
+	
+	public MovieVO getMovie(String title) {
+		return dao.getMovie(title);
+	}
 }

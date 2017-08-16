@@ -16,12 +16,14 @@ public class Crawler {
 	}
 	
 	public Elements getElements(String form) {
-		try {
-			Document doc = Jsoup.connect(url).get();
-			Elements menu = doc.select(form);
-			return menu;
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(url != "" && url != null){
+			try {
+				Document doc = Jsoup.connect(url).get();
+				Elements menu = doc.select(form);
+				return menu;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}
